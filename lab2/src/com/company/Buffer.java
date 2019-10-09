@@ -1,30 +1,32 @@
 package com.company;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Buffer {
-    private int value;
+    private List<Integer> list;
+    private int size;
 
-    public Buffer() {
-        this.value = 0;
+    public Buffer(int size) {
+        this.list = new LinkedList<>();
+        this.size = size;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public synchronized void produce(int val) throws InterruptedException{
-        while (value != 0 ){
+    public synchronized void produce(int val) throws InterruptedException {
+        while (list.size() == size) {
             wait();
         }
         System.out.println("producing value " + val);
-        value = val;
-        notifyAll();
+        list.add(val);
+        notify();
     }
 
-    public synchronized void consume() throws InterruptedException{
-        while (value == 0)
+    public synchronized void consume() throws InterruptedException {
+        while (list.size() == 0)
             wait();
-        value = 0;
+        list.remove(0);
+        
         System.out.println("consuming value, setting to 0");
-        notifyAll();
+        notify();
     }
 }
