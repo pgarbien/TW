@@ -1,7 +1,3 @@
-package com.company;
-
-import java.util.concurrent.Future;
-
 public class MethodRequest {
     private String methodName;
     private int size;

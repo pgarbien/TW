@@ -1,7 +1,5 @@
-package com.company;
 import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ActivationQueue {
@@ -16,8 +14,7 @@ public class ActivationQueue {
         try {
             requests.add(request);
             isEmpty.signal();
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -25,13 +22,12 @@ public class ActivationQueue {
     public MethodRequest dequeue() throws InterruptedException {
         lock.lock();
         try {
-            while(requests.isEmpty()) {
+            while (requests.isEmpty()) {
                 isEmpty.await();
             }
 
             return requests.poll();
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
