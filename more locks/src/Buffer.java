@@ -64,7 +64,7 @@ public class Buffer {
                 //System.out.println("consuming " + numberOfElements + ", buffer size: " + list.size());
                 //consumers.signal();
                 timesConsumed++;
-                if(timesConsumed > 1_000_000){
+                if (timesConsumed > 1_000_000) {
                     System.out.println(System.currentTimeMillis() - start);
                     System.exit(1);
                 }
