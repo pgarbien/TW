@@ -17,28 +17,35 @@ public class Buffer {
         this.size = size;
     }
 
-    public void produce(int val) throws InterruptedException {
+    public void produce(int numberOfElements) throws InterruptedException {
         lock.lock();
         try {
-            while (list.size() == size) {
+            System.out.println("trying to produce " + numberOfElements);
+            while (list.size() + numberOfElements > size) {
                 listFull.await();
             }
-            System.out.println("producing value " + list.size());
-            list.add(list.size());
+            for (int i = 0; i < numberOfElements; i++) {
+                list.add(list.size());
+            }
+
+            System.out.println("producing " + numberOfElements + ", buffer size: " + list.size());
             listEmpty.signal();
         } finally {
             lock.unlock();
         }
     }
 
-    public void consume() throws InterruptedException {
+    public void consume(int numberOfElements) throws InterruptedException {
         lock.lock();
         try {
-            while (list.size() == 0)
+            System.out.println("trying to consume " + numberOfElements);
+            while (list.size() < numberOfElements)
                 listEmpty.await();
-            list.removeFirst();
+            for (int i = 0; i < numberOfElements; i++) {
+                list.removeFirst();
+            }
 
-            System.out.println("consuming value");
+            System.out.println("consuming " + numberOfElements+ ", buffer size: " + list.size());
             listFull.signal();
         } finally {
             lock.unlock();
