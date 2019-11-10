@@ -1,5 +1,3 @@
-package com.company;
-
 public class Container {
     private int value;
 
@@ -10,10 +8,12 @@ public class Container {
     public int getValue() {
         return value;
     }
-    public void increment(){
+
+    public void increment() {
         value++;
     }
-    public void decrement(){
+
+    public void decrement() {
         value--;
     }
 }

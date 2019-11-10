@@ -1,6 +1,4 @@
-package com.company;
-
-public class IncrementThread extends Thread{
+public class IncrementThread extends Thread {
     private Container container;
     private int numberOfOperations;
 
@@ -11,7 +9,7 @@ public class IncrementThread extends Thread{
 
     @Override
     public void run() {
-        for (int i =0; i<numberOfOperations; i++){
+        for (int i = 0; i < numberOfOperations; i++) {
             container.increment();
         }
     }
