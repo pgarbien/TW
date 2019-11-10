@@ -1,8 +1,5 @@
-package com.company;
-
 import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Buffer {
@@ -44,7 +41,7 @@ public class Buffer {
     public void consume(int numberOfElements) throws InterruptedException {
         lock.lock();
         try {
-            if(lock.hasWaiters(firstConsumer))
+            if (lock.hasWaiters(firstConsumer))
                 otherConsumers.await();
             System.out.println("trying to consume " + numberOfElements);
 
@@ -54,7 +51,7 @@ public class Buffer {
                 list.removeFirst();
             }
 
-            System.out.println("consuming " + numberOfElements+ ", buffer size: " + list.size());
+            System.out.println("consuming " + numberOfElements + ", buffer size: " + list.size());
             otherConsumers.signal();
             firstProducer.signal();
         } finally {
