@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.Random;
 
 public class Producer extends Thread {
