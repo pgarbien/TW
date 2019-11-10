@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,7 +31,7 @@ public class Buffer {
     public void produce(int numberOfElements) throws InterruptedException {
         lock.lock();
         try {
-            if (firstProducerWaiting){
+            if (firstProducerWaiting) {
                 otherProducers.await();
             }
             firstProducerWaiting = true;
@@ -69,7 +67,7 @@ public class Buffer {
             firstConsumerWaiting = false;
             //System.out.println("consuming " + numberOfElements + ", buffer size: " + list.size());
             timesConsumed++;
-            if(timesConsumed > 1_000_000){
+            if (timesConsumed > 1_000_000) {
                 System.out.println(System.currentTimeMillis() - start);
                 System.exit(1);
             }
