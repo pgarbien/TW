@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -45,7 +43,7 @@ public class Buffer {
                 list.removeFirst();
             }
 
-            System.out.println("consuming " + numberOfElements+ ", buffer size: " + list.size());
+            System.out.println("consuming " + numberOfElements + ", buffer size: " + list.size());
             listFull.signal();
         } finally {
             lock.unlock();
