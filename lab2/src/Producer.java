@@ -1,19 +1,19 @@
-package com.company;
-
-public class Consumer extends Thread{
+public class Producer extends Thread {
     private Buffer buffer;
 
-    public Consumer(Buffer buffer) {
+    public Producer(Buffer buffer) {
         this.buffer = buffer;
     }
+
     @Override
     public void run() {
         try {
-            while (true){
-                buffer.consume();
+            while (true) {
+                buffer.produce(10);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 }

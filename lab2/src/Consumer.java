@@ -1,23 +1,18 @@
-package com.company;
-
-import java.util.Random;
-
-public class Producer extends Thread{
+public class Consumer extends Thread {
     private Buffer buffer;
 
-    public Producer(Buffer buffer) {
+    public Consumer(Buffer buffer) {
         this.buffer = buffer;
     }
 
     @Override
     public void run() {
         try {
-            while (true){
-                buffer.produce(10);
+            while (true) {
+                buffer.consume();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

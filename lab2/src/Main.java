@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class Main {
             t.start();
         }
 
-        for (Thread t : threads){
+        for (Thread t : threads) {
             t.join();
         }
         // dodac aby byla tablica w zasobie a nie jeden element
