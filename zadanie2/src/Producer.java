@@ -13,8 +13,8 @@ public class Producer extends Thread {
     @Override
     public void run() {
         while (true) {
-            MethodRequest request = proxy.produce(generator.nextInt(size) + 1);
-            while (!proxy.checkRequest(request)) {
+            proxy.produce(generator.nextInt(size) + 1);
+            while (!proxy.checkRequest()) {
                 calculate();
             }
         }

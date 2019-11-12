@@ -1,7 +1,7 @@
 public class Proxy {
     private ActivationQueue activationQueue;
     //private ExecutorService executor;
-
+    MethodRequest currentMethodRequest;
     public Proxy(ActivationQueue activationQueue) {
         //this.executor = Executors.newSingleThreadExecutor();
         this.activationQueue = activationQueue;
@@ -17,19 +17,19 @@ public class Proxy {
             return Boolean.TRUE;
         });
     }*/
-    public MethodRequest produce(int numberOfElements) {
+    public void produce(int numberOfElements) {
         MethodRequest request = new MethodRequest("produce", numberOfElements);
         activationQueue.enqueue(request);
-        return request;
+        currentMethodRequest= request;
     }
 
-    public MethodRequest consume(int numberOfElements) {
+    public void consume(int numberOfElements) {
         MethodRequest request = new MethodRequest("consume", numberOfElements);
         activationQueue.enqueue(request);
-        return request;
+        currentMethodRequest = request;
     }
 
-    public boolean checkRequest(MethodRequest request) {
-        return request.isDone();
+    public boolean checkRequest() {
+        return currentMethodRequest.isDone();
     }
 }
