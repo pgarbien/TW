@@ -2,10 +2,12 @@ import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.Thread.sleep;
+
 public class Buffer {
     private LinkedList<Integer> list;
     private int size;
-
+    private int sleepTime;
     private ReentrantLock lock = new ReentrantLock();
     private Condition firstProducer = lock.newCondition();
     private Condition otherProducers = lock.newCondition();
@@ -19,10 +21,10 @@ public class Buffer {
     public Long timesProduced;
     public Long timesConsumed;
 
-    public Buffer(int size) {
+    public Buffer(int size, int sleepTime) {
         this.list = new LinkedList<>();
         this.size = size;
-
+        this.sleepTime = sleepTime;
         timesConsumed = 0L;
         timesProduced = 0L;
         start = System.currentTimeMillis();
@@ -36,7 +38,6 @@ public class Buffer {
             }
             firstProducerWaiting = true;
 
-            //System.out.println("trying to produce " + numberOfElements);
             while (size - list.size() < numberOfElements) {
                 firstProducer.await();
             }
@@ -44,7 +45,7 @@ public class Buffer {
                 list.add(list.size());
             }
             firstProducerWaiting = false;
-            //System.out.println("producing " + numberOfElements + ", buffer size: " + list.size());
+            sleep(sleepTime);
             otherProducers.signal();
             firstConsumer.signal();
         } finally {
@@ -57,7 +58,6 @@ public class Buffer {
         try {
             if (firstConsumerWaiting)
                 otherConsumers.await();
-            //System.out.println("trying to consume " + numberOfElements);
             firstConsumerWaiting = true;
             while (list.size() < numberOfElements)
                 firstConsumer.await();
@@ -65,12 +65,12 @@ public class Buffer {
                 list.removeFirst();
             }
             firstConsumerWaiting = false;
-            //System.out.println("consuming " + numberOfElements + ", buffer size: " + list.size());
             timesConsumed++;
             if (timesConsumed > 1_000_000) {
                 System.out.println(System.currentTimeMillis() - start);
                 System.exit(1);
             }
+            sleep(sleepTime);
             otherConsumers.signal();
             firstProducer.signal();
         } finally {
