@@ -21,7 +21,7 @@ public class Consumer extends Thread {
     }
 
     private void calculate() {
-        Long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         int result = 103231;
         while (System.currentTimeMillis() < start + 100) {
             result = (result * 1311) % 2000;
