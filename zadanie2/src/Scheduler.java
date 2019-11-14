@@ -60,7 +60,7 @@ public class Scheduler extends Thread {
                         servant.produce(producerQueue.pop().getSize());
                     } else {
                         MethodRequest request = mainQueue.dequeue();
-                        if (request.getMethodName().equals("prodcue")) {
+                        if (request.getMethodName().equals("produce")) {
                             producerQueue.add(request);
                             System.out.println("Another producer, putting in queue");
                         } else {

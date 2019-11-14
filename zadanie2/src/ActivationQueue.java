@@ -25,7 +25,6 @@ public class ActivationQueue {
             while (requests.isEmpty()) {
                 isEmpty.await();
             }
-
             return requests.poll();
         } finally {
             lock.unlock();
